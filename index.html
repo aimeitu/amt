@@ -282,11 +282,31 @@
       }
     }
 
+    .gallery-notice {
+      margin: 1.5rem 0 0;
+      padding: 14px 18px;
+      border: 1px solid rgba(240, 68, 148, 0.14);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 247, 252, 0.96) 0%, rgba(255, 255, 255, 0.98) 100%);
+      box-shadow: 0 4px 12px rgba(240, 68, 148, 0.08);
+      color: #4a3a46;
+      font-size: clamp(15px, 3.2vw, 18px);
+      font-weight: 700;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .gallery-notice a {
+      color: #f04494;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
     .galleries {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 1rem;
-      padding: 2rem 0;
+      padding: 1.25rem 0 2rem;
     }
 
     .gallery-card {
@@ -394,6 +414,7 @@
     }
 
     .gallery-title {
+      display: -webkit-box;
       margin: 0;
       overflow: hidden;
       color: #2f2430;
@@ -401,7 +422,9 @@
       font-weight: 700;
       line-height: 1.45;
       letter-spacing: 0.01em;
-      white-space: nowrap;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
       text-overflow: ellipsis;
     }
 
@@ -705,6 +728,8 @@
       <div class="carousel-pagination" id="carouselPagination" aria-label="热门推荐翻页"></div>
     </section>
 
+    <div class="gallery-notice" id="galleryNotice"></div>
+
     <section class="galleries" id="galleryList" aria-label="图集列表"></section>
 
     <div class="pagination-container">
@@ -778,6 +803,10 @@
         coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/15/2025.10.28_73fb5784-fbd8-4a58-ad8c-fea82f23dced/cover.webp',
         imageCount: 67,
       },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/16/2018.11.29_285db26a-7b4f-4134-b3f3-5ccef1284ce5/cover.webp',
+        imageCount: 46,
+      },
 
     ];
 
@@ -787,6 +816,7 @@
     const brandImage = document.getElementById('brandImage');
     const carouselWrapper = document.getElementById('carouselWrapper');
     const carouselPagination = document.getElementById('carouselPagination');
+    const galleryNotice = document.getElementById('galleryNotice');
     const galleryList = document.getElementById('galleryList');
     const pagination = document.getElementById('pagination');
     const footerText = document.getElementById('footerText');
@@ -915,6 +945,8 @@
     syncHeroCarousel();
     startHeroAutoPlay();
     window.addEventListener('resize', handleHeroResize);
+
+    galleryNotice.innerHTML = `以下图集您可在<a href="${promoUrl}">爱美图</a>首页-广告用图查看详情`;
 
     galleryList.innerHTML = getRandomGalleries(8).map((gallery, index) => {
       const title = gallery.title;
