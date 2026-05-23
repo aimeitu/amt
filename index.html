@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
-  <title>爱美图 - 高清精品图集</title>
+  <title>爱美图 - 高清精品美图</title>
   <style>
     :root {
       --pink-50: #fff7fb;
@@ -51,49 +51,72 @@
     .page {
       width: min(1200px, calc(100% - 12px));
       margin: 0 auto;
-      padding: 8px 0 28px;
+      padding: 80px 0 28px;
     }
 
     .brand {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 64px;
+      border-bottom: 1px solid rgba(240, 68, 148, 0.08);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 2px 14px rgba(20, 16, 24, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-inner {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      min-height: 58px;
-      margin-bottom: 16px;
+      width: min(1200px, 100%);
+      height: 100%;
+      padding: 0 20px;
     }
 
     .brand-image {
-      display: none;
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+      width: auto;
+      height: 45px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .brand-image:hover {
+      transform: scale(1.05);
     }
 
     .brand-image.is-visible {
       display: block;
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
+    .brand-image:not(.is-visible) {
+      display: none;
+    }
+
+    .brand-notice {
+      display: inline-flex;
       align-items: center;
-      line-height: 1.05;
+      min-width: 0;
+      color: #ad1457;
+      font-size: clamp(15px, 2.8vw, 20px);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
     }
 
-    .brand-name {
-      font-size: clamp(26px, 5vw, 38px);
+    .brand-notice span {
+      margin-left: 4px;
+      color: #f04494;
       font-weight: 900;
-      letter-spacing: .08em;
-      color: var(--pink-700);
-    }
-
-    .brand-domain {
-      margin-top: 6px;
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: .04em;
     }
 
     .hero {
@@ -382,30 +405,119 @@
       text-overflow: ellipsis;
     }
 
-    .pagination {
+    .gallery-title-count {
+      color: #F04494;
+    }
+
+    .pagination-container {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem 0;
+    }
+
+    .el-pagination {
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin: 24px 0 20px;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: #606266;
+      font-size: 14px;
+      font-weight: 400;
     }
 
-    .page-link {
-      min-width: 42px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--pink-700);
-      font-weight: 800;
+    .el-pagination button,
+    .el-pager li {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 4px;
+      border: 0;
+      border-radius: 2px;
+      background: transparent;
+      color: #606266;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 32px;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .el-pager {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .el-pager li a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .el-pager li.is-active {
+      background-color: #f8bbd9;
+      color: #fff;
+      border-color: #f8bbd9;
+    }
+
+    .el-pagination button:hover,
+    .el-pager li:hover,
+    .el-pagination__jump a:hover {
+      color: #f04494;
+    }
+
+    .el-pagination__jump {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 8px;
+      color: #606266;
+      font-size: 14px;
+    }
+
+    .el-input__wrapper {
+      display: inline-flex;
+      align-items: center;
+      width: 46px;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 0 0 1px #dcdfe6 inset;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .el-input__wrapper:hover,
+    .el-input__wrapper:focus-within {
+      border-color: #f8bbd9;
+      box-shadow: 0 0 0 1px #f8bbd9 inset;
+    }
+
+    .el-input__inner {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      outline: none;
+      color: #606266;
+      font-size: 14px;
+      line-height: 32px;
       text-align: center;
-      background: var(--white);
-      border: 1px solid var(--pink-200);
-      box-shadow: 0 8px 18px rgba(236, 106, 167, .1);
-    }
-
-    .page-link.is-current {
-      color: var(--white);
-      background: linear-gradient(135deg, var(--pink-500), var(--pink-400));
-      border-color: transparent;
+      background: transparent;
     }
 
     .footer {
@@ -533,26 +645,44 @@
     @media (max-width: 680px) {
       .page {
         width: min(100% - 12px, 1200px);
-        padding-top: 8px;
+        padding-top: 72px;
       }
 
       .brand {
-        min-height: 52px;
-        margin-bottom: 12px;
+        height: 56px;
       }
 
-      .brand-domain {
-        font-size: 13px;
-      }
-
-      .pagination {
+      .brand-inner {
         gap: 8px;
-        margin: 20px 0 12px;
+        padding: 0 10px;
       }
 
-      .page-link {
-        min-width: 38px;
-        padding: 9px 12px;
+      .brand-image {
+        height: 40px;
+      }
+
+      .brand-notice {
+        font-size: clamp(13px, 3.8vw, 16px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .pagination-container {
+        padding: 1rem 0;
+      }
+
+      .el-pagination {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .el-pager {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .el-pagination__jump {
+        margin-left: 0;
       }
     }
   </style>
@@ -560,10 +690,9 @@
 <body>
   <main class="page">
     <header class="brand" aria-label="爱美图">
-      <img class="brand-image" id="brandImage" alt="爱美图">
-      <div class="brand-text">
-        <div class="brand-name">爱美图</div>
-        <div class="brand-domain">aimeitu01.com</div>
+      <div class="brand-inner">
+        <img class="brand-image" id="brandImage" alt="爱美图 Logo">
+        <div class="brand-notice">记得收藏本站网址:<span>aimeitu01.com</span></div>
       </div>
     </header>
 
@@ -578,7 +707,9 @@
 
     <section class="galleries" id="galleryList" aria-label="图集列表"></section>
 
-    <nav class="pagination" id="pagination" aria-label="分页"></nav>
+    <div class="pagination-container">
+      <nav class="el-pagination" id="pagination" aria-label="分页"></nav>
+    </div>
 
     <footer class="footer" id="footerText"></footer>
   </main>
@@ -586,24 +717,68 @@
   <script>
     const SITE_DOMAIN = 'aimeitu01.com';
     const DEFAULT_SLUG = 'test01';
-    const LOGO_IMAGE_URL = '';
+    const LOGO_IMAGE_URL = 'https://wjs.qingyunshe.top/as/logo.webp';
 
     const heroNames = [
-      '杨晨晨',
-      '王雨纯',
-      '周于希',
-      '唐安琪'
-    ];
+  '蠢沫沫',
+  '桜井宁宁',
+  '广告用图',
+  '星之迟迟hoshilily',
+  '过期米线线SAMA',
+  'rioko凉凉子',
+  '水淼-Aqua',
+];
 
-    const galleryCoverUrls = [
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/2018.10.19_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/清新粉色写真_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/甜美居家少女_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/午后阳光写真_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/花园气质美人_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/粉裙温柔写真_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/海边清凉图集_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp',
-      'https://wjs.qingyunshe.top/galleries/2026/05/22/高颜值私房写真_856a7fe3-609f-4955-a0ae-cbda2f1e6467/cover.webp'
+    const galleryItems = [
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/20/2025.04.01_10f9a7e3-bdb8-4d54-a820-088e150c743e/cover.webp',
+        imageCount: 78,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/20/2025.03.28_32d08b12-a6e3-4318-b190-324d6a915113/cover.webp',
+        imageCount: 98,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/20/2025.03.24_615a58b4-511e-4030-8929-d702251d2d68/cover.webp',
+        imageCount: 77,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/20/2025.03.21_b1257344-813f-42a3-a579-7317fb4ac877/cover.webp',
+        imageCount: 79,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/19/2025.04.16_b07a2674-deee-45a6-beda-ab5a3a829da0/cover.webp',
+        imageCount: 67,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/18/2025.12.17%20CHENCHEN_1acb53a8-a79f-4a34-b5d1-55db061c8fad/cover.webp',
+        imageCount: 67,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/19/2025.09.28%20%E6%B2%88%E5%8D%97%E6%B1%90RuRu_e8e0e5ee-0b04-437c-9741-d9b552e48cdb/cover.webp',
+        imageCount: 56,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/18/2025.12.29%20%E5%BF%83%E4%B8%8A%E5%8F%AFFlora_c427cc1b-7c2b-4468-9deb-7bcdf3cd747b/cover.webp',
+        imageCount: 61,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/18/2025.12.26%20%E9%87%91%E5%85%81%E5%B8%8CYuki_c5b3f8ce-706d-44c1-85a5-4b46a0328c68/cover.webp',
+        imageCount: 77,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/19/2025.09.30%20%E6%B1%81%E6%B1%81_474c15d1-f942-437d-82db-ed2ff652b36f/cover.webp',
+        imageCount: 69,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/04/20/2025.10.13%20%E6%A2%A8%E9%9C%9C%E5%84%BF_cf48b5d8-f6e3-46fd-8bb1-2df8bd786932/cover.webp',
+        imageCount: 71,
+      },
+      {
+        coverUrl: 'https://wjs.qingyunshe.top/c/700x980/webp/galleries/2026/05/15/2025.10.28_73fb5784-fbd8-4a58-ad8c-fea82f23dced/cover.webp',
+        imageCount: 67,
+      },
+
     ];
 
     const slug = new URLSearchParams(location.search).get('slug')?.trim() || DEFAULT_SLUG;
@@ -624,6 +799,17 @@
       const decoded = decodeURIComponent(url);
       const matched = decoded.match(/\/galleries\/\d{4}\/\d{2}\/\d{2}\/(.+?)_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\//i);
       return matched ? matched[1].replace(/[_-]+/g, ' ').trim() : '高清精品图集';
+    }
+
+    function getRandomGalleries(limit) {
+      return [...galleryItems]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, limit)
+        .map((gallery) => ({
+          ...gallery,
+          title: galleryTitleFromUrl(gallery.coverUrl),
+        }))
+        .sort((a, b) => b.title.localeCompare(a.title, 'zh-CN'));
     }
 
     function goPromo() {
@@ -730,9 +916,9 @@
     startHeroAutoPlay();
     window.addEventListener('resize', handleHeroResize);
 
-    galleryList.innerHTML = galleryCoverUrls.slice(0, 8).map((url, index) => {
-      const title = galleryTitleFromUrl(url);
-      return `<article class="gallery-card" data-gallery-id="landing-${index}" role="link" tabindex="0" aria-label="查看图集：${title}"><a class="gallery-cover" href="${promoUrl}" aria-label="查看图集：${title}"><div class="image-placeholder"><div class="placeholder-shimmer"></div></div><picture><source type="image/webp" srcset="${url}"><img class="cover-image" src="${url}" alt="${title} - 高清在线美图" title="${title}" loading="lazy" decoding="async"></picture></a><div class="gallery-info"><h2 class="gallery-title"><a href="${promoUrl}">${title}</a></h2></div></article>`;
+    galleryList.innerHTML = getRandomGalleries(8).map((gallery, index) => {
+      const title = gallery.title;
+      return `<article class="gallery-card" data-gallery-id="landing-${index}" role="link" tabindex="0" aria-label="查看图集：${title}"><a class="gallery-cover" href="${promoUrl}" aria-label="查看图集：${title}"><div class="image-placeholder"><div class="placeholder-shimmer"></div></div><picture><source type="image/webp" srcset="${gallery.coverUrl}"><img class="cover-image" src="${gallery.coverUrl}" alt="${title} - 高清在线美图" title="${title}" loading="lazy" decoding="async"></picture></a><div class="gallery-info"><h2 class="gallery-title"><a href="${promoUrl}">${title} <span class="gallery-title-count">[${gallery.imageCount} P]</span></a></h2></div></article>`;
     }).join('');
 
     galleryList.querySelectorAll('.gallery-card').forEach((card) => {
@@ -762,12 +948,21 @@
       });
     });
 
-    pagination.innerHTML = ['1', '2', '3', '下一页'].map((text, index) => {
-      const current = index === 0 ? ' is-current' : '';
-      return `<a class="page-link${current}" href="${promoUrl}">${text}</a>`;
-    }).join('');
+    pagination.innerHTML = `<button class="btn-prev" type="button" aria-label="上一页">‹</button><ul class="el-pager">${['1', '2', '3', '4', '5'].map((text, index) => `<li class="${index === 0 ? 'is-active' : ''}"><a href="${promoUrl}" aria-label="第 ${text} 页">${text}</a></li>`).join('')}</ul><button class="btn-next" type="button" aria-label="下一页">›</button><span class="el-pagination__jump">前往<div class="el-input__wrapper"><input class="el-input__inner" value="1" inputmode="numeric" aria-label="页码"></div>页</span>`;
+    pagination.querySelectorAll('button, a, input').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.preventDefault();
+        goPromo();
+      });
+      element.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          goPromo();
+        }
+      });
+    });
 
-    footerText.innerHTML = `更多高清精品图集请访问<a href="${promoUrl}">${SITE_DOMAIN}/promo/${slug}</a>`;
+    footerText.innerHTML = `更多高清精品图集请访问<a href="${promoUrl}">${SITE_DOMAIN}</a>`;
   </script>
 </body>
 </html>
