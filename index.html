@@ -824,7 +824,7 @@
 
     // 建立 DNS/TCP/TLS/HTTP2 连接
     function warmupPromoHost() {
-      fetch('https://aimeitu01.com/logo-zh-optimized.webp', {
+      fetch('https://aimeitu01.com/', {
         mode: 'no-cors',
         credentials: 'omit',
         cache: 'force-cache'
@@ -869,6 +869,13 @@
     const galleryList = document.getElementById('galleryList');
     const pagination = document.getElementById('pagination');
     const footerText = document.getElementById('footerText');
+    window.addEventListener('load', () => {
+    warmupPromoHost();
+
+    setTimeout(() => {
+      prefetchPromoPage();
+    }, 1500);
+  });
 
     function heroImageBase(name) {
       return `https://wjs.1hdns.cn/ch/${encodeURIComponent(name)}`;
