@@ -709,6 +709,8 @@
       }
     }
   </style>
+  <link rel="dns-prefetch" href="//aimeitu01.com">
+  <link rel="preconnect" href="https://aimeitu01.com" crossorigin>
 </head>
 <body>
   <main class="page">
@@ -807,11 +809,58 @@
         coverUrl: 'https://wjs.1hdns.cn/c/700x980/webp/galleries/2026/05/16/2018.11.29_285db26a-7b4f-4134-b3f3-5ccef1284ce5/cover.webp',
         imageCount: 46,
       },
+      {
+        coverUrl: 'https://wjs.1hdns.cn/c/700x980/webp/galleries/2026/05/16/2025.10.31_7eb376a8-77d9-4a92-8033-bc0bbb817db9/cover.webp',
+        imageCount: 59,
+      },
 
     ];
 
     const slug = new URLSearchParams(location.search).get('slug')?.trim() || DEFAULT_SLUG;
     const promoUrl = `https://${SITE_DOMAIN}/promo/${encodeURIComponent(slug)}`;
+    // =========================
+    // Promo 预热优化
+    // =========================
+
+    // 建立 DNS/TCP/TLS/HTTP2 连接
+    function warmupPromoHost() {
+      fetch('https://aimeitu01.com/logo-zh-optimized.webp', {
+        mode: 'no-cors',
+        credentials: 'omit',
+        cache: 'force-cache'
+      }).catch(() => {});
+    }
+
+    // 浏览器空闲时预取目标页
+    function prefetchPromoPage() {
+      if (document.querySelector('link[data-promo-prefetch]')) {
+        return;
+      }
+
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = promoUrl;
+      link.as = 'document';
+      link.setAttribute('data-promo-prefetch', '1');
+
+      document.head.appendChild(link);
+    }
+
+    // 用户产生点击意图时立即预热
+    let promoIntentFetched = false;
+
+    function intentFetchPromo() {
+      if (promoIntentFetched) {
+        return;
+      }
+
+      promoIntentFetched = true;
+
+      fetch(promoUrl, {
+        mode: 'no-cors',
+        credentials: 'omit'
+      }).catch(() => {});
+    }
 
     const brandImage = document.getElementById('brandImage');
     const carouselWrapper = document.getElementById('carouselWrapper');
@@ -995,6 +1044,39 @@
     });
 
     footerText.innerHTML = `更多高清精品图集请访问<a href="${promoUrl}">${SITE_DOMAIN}</a>`;
+    // =========================
+    // Hover 预热
+    // =========================
+
+    document.addEventListener(
+      'pointerover',
+      (event) => {
+        const target = event.target.closest(
+          'a, .gallery-card, .hero-slide'
+        );
+
+        if (target) {
+          intentFetchPromo();
+        }
+      },
+      {
+        passive: true
+      }
+    );
+    // =========================
+    // Touch 预热
+    // =========================
+
+    document.addEventListener(
+      'touchstart',
+      () => {
+        intentFetchPromo();
+      },
+      {
+        once: true,
+        passive: true
+      }
+    );
   </script>
 </body>
 </html>
