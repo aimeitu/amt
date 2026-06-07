@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <title>爱美图 - 高清精品美图</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
   <style>
     :root {
       --pink-50: #fff7fb;
@@ -818,11 +820,7 @@
 
     const slug = new URLSearchParams(location.search).get('slug')?.trim() || DEFAULT_SLUG;
     const promoUrl = `https://${SITE_DOMAIN}/promo/${encodeURIComponent(slug)}`;
-    // =========================
-    // Promo 预热优化
-    // =========================
 
-    // 建立 DNS/TCP/TLS/HTTP2 连接
     function warmupPromoHost() {
       fetch('https://aimeitu01.com/', {
         mode: 'no-cors',
@@ -831,7 +829,6 @@
       }).catch(() => {});
     }
 
-    // 浏览器空闲时预取目标页
     function prefetchPromoPage() {
       if (document.querySelector('link[data-promo-prefetch]')) {
         return;
@@ -846,7 +843,6 @@
       document.head.appendChild(link);
     }
 
-    // 用户产生点击意图时立即预热
     let promoIntentFetched = false;
 
     function intentFetchPromo() {
@@ -1051,9 +1047,6 @@
     });
 
     footerText.innerHTML = `更多高清精品图集请访问<a href="${promoUrl}">${SITE_DOMAIN}</a>`;
-    // =========================
-    // Hover 预热
-    // =========================
 
     document.addEventListener(
       'pointerover',
@@ -1070,9 +1063,6 @@
         passive: true
       }
     );
-    // =========================
-    // Touch 预热
-    // =========================
 
     document.addEventListener(
       'touchstart',
